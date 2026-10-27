@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splitvilla — Group Expenses, Without the Awkward Math</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- 1. LANDING PAGE TOP NAVIGATION -->
+<header class="top-nav" id="landingNav">
+  <a class="brand-wrapper" onclick="show('landing')">
+    <img src="image.png" alt="Splitvilla logo" class="brand-logo-circle" />
+    <div class="brand-titles">
+      <h1>Splitvilla</h1>
+      <span>Smart Expense Splitter</span>
+    </div>
+  </a>
+
+  <nav class="nav-links">
+    <a class="nav-item" onclick="scrollToSection('how-it-works', event)">How it works</a>
+    <a class="nav-item" onclick="scrollToSection('why-splitvilla', event)">Why Splitvilla</a>
+    <button class="nav-item" onclick="openCreateTrip()">Create Trip</button>
+    <button class="nav-item" onclick="openJoinTrip()">Join Trip</button>
+  </nav>
+
+  <div class="nav-actions">
+    <button class="btn-forest" onclick="enterTrip()">Trip Workspace →</button>
+  </div>
+</header>
+
+<!-- 2. IN-APP TRIP TOP NAVIGATION -->
+<header class="top-nav" id="tripNav" style="display: none;">
+  <a class="brand-wrapper" onclick="show('trip-workspace')">
+    <img src="image.png" alt="Splitvilla logo" class="brand-logo-circle" />
+    <div class="brand-titles">
+      <h1>Splitvilla</h1>
+      <span id="navTripName">Goa Trip 2026</span>
+    </div>
+  </a>
+
+  <nav class="nav-links">
+    <button class="nav-item active" id="tabTripWorkspace" onclick="show('trip-workspace')">Overview</button>
+    <button class="nav-item" id="tabExpenses" onclick="show('expenses')">Expenses</button>
+    <button class="nav-item" id="tabMembers" onclick="show('members')">Members</button>
+    <button class="nav-item" onclick="goToAnalytics()">Analytics</button>
+    <button class="nav-item" id="tabChat" onclick="show('chat')">Chat</button>
+    <button class="nav-item" id="tabPayment" onclick="show('contact')">Payment</button>
+  </nav>
+
+  <div class="nav-actions">
+    <span id="pageLabel">Trip Workspace</span>
+    <button class="btn-primary" onclick="show('expenses')">+ Add Expense</button>
+    <button class="btn-secondary" onclick="show('landing')" style="padding: 7px 14px; font-size: 0.82rem;">Exit Trip</button>
+  </div>
+</header>
+
+<!-- MOBILE BOTTOM NAVIGATION DOCK -->
+<nav class="mobile-nav-dock" id="mobileNavDock">
+  <button class="active" id="mNavHome" onclick="show('landing')">
+    <span>🏠</span> Home
+  </button>
+  <button id="mNavTrip" onclick="show('trip-workspace')">
+    <span>🌴</span> Trip
+  </button>
+  <button id="mNavExp" onclick="show('expenses')">
+    <span>📝</span> Ledger
+  </button>
+  <button id="mNavMbr" onclick="show('members')">
+    <span>👥</span> Crew
+  </button>
+  <button id="mNavAnalytics" onclick="goToAnalytics()">
+    <span>📊</span> Split
+  </button>
+</nav>
+
+<!-- MAIN CONTENT CONTAINER -->
+<div class="main">
+  <main class="container">
+
+    <!-- ====================================================================
+         PAGE 1: SPLITVILLA PRODUCT LANDING PAGE
+         ==================================================================== -->
+    <section id="landing" class="section active">
+      
+      <!-- CINEMATIC HERO WITH BG.JPEG -->
+      <div class="landing-hero-cinematic">
+        <div class="landing-hero-left-content">
+          <div class="landing-brand-tag">SPLITVILLA</div>
+          <h1 class="landing-hero-headline">Group expenses,<br>without the awkward math.</h1>
+          <p class="landing-hero-subtext">
+            Plan together. Spend together.<br>
+            Split fairly. Settle effortlessly.
+          </p>
+
+          <div class="landing-cta-group">
+            <button class="btn-primary" onclick="openCreateTrip()" style="padding: 15px 34px; font-size: 1.05rem;">
+              CREATE A TRIP →
+            </button>
+            <button class="btn-hero-join" onclick="openJoinTrip()" style="padding: 15px 34px; font-size: 1.05rem;">
+              JOIN A TRIP
+            </button>
+          </div>
+
+          <div class="landing-active-trip-hint">
+            Currently managing a group trip? <a onclick="enterTrip('Goa Trip 2026')">Open active Goa Trip 2026 Workspace →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- REAL GROUP EXPENSE TRANSFORMATION VISUAL -->
+      <div class="transformation-visual-card">
+        <div class="transform-grid">
+          
+          <div class="transform-left-bill">
+            <div class="bill-tag">Shared Bill</div>
+            <div class="bill-title">Beach Shack Dinner</div>
+            <div class="bill-amount">₹2,400</div>
+            <div class="bill-payer">Paid by <strong>Misty</strong></div>
+          </div>
+
+          <div class="transform-arrow-indicator">
+            <span class="arrow-icon">↓</span>
+            <span>Fair Split</span>
+          </div>
+
+          <div class="transform-right-split">
+            <div class="split-item-row">
+              <span class="split-person-tag">Misty</span>
+              <span class="split-amount-tag">₹480</span>
+            </div>
+            <div class="split-item-row">
+              <span class="split-person-tag">Rahul</span>
+              <span class="split-amount-tag">₹480</span>
+            </div>
+            <div class="split-item-row">
+              <span class="split-person-tag">Priya</span>
+              <span class="split-amount-tag">₹480</span>
+            </div>
+            <div class="split-item-row">
+              <span class="split-person-tag">Suryansh</span>
+              <span class="split-amount-tag">₹480</span>
+            </div>
+            <div class="split-item-row">
+              <span class="split-person-tag">Ananya</span>
+              <span class="split-amount-tag">₹480</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="transformation-tagline">
+          ✨ 6 friends · 1 trip · 0 money confusion
+        </div>
+      </div>
+
+      <!-- HOW SPLITVILLA WORKS -->
+      <div class="how-it-works-section" id="how-it-works">
+        <div class="section-editorial-heading" style="text-align: center; margin-bottom: 20px;">
+          <div class="eyebrow">Seamless Flow</div>
+          <h2>HOW SPLITVILLA WORKS</h2>
+          <p>Four intuitive steps to take the headache out of group finances.</p>
+        </div>
+
+        <div class="how-steps-grid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-title">CREATE YOUR GROUP</div>
+            <div class="step-description">Add your friends and start a trip workspace in seconds.</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-title">TRACK EXPENSES</div>
+            <div class="step-description">Record who covered what across food, cabs, stays, and activities.</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-title">SMART SPLIT</div>
+            <div class="step-description">Instantly see everyone's net balance and fair share without math.</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <div class="step-title">SETTLE UP</div>
+            <div class="step-description">Resolve all debts using the mathematically minimal peer transfers.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHY SPLITVILLA STATEMENT BANNER -->
+      <div class="why-statement-banner" id="why-splitvilla">
+        <h2>Stop calculating who owes whom.</h2>
+        <div class="why-pillars-row">
+          <div class="pillar-item">No spreadsheets.</div>
+          <div class="pillar-item">No awkward reminders.</div>
+          <div class="pillar-item">No money confusion.</div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button class="btn-primary" onclick="openCreateTrip()" style="padding: 14px 28px;">
+            Create Your Trip Now →
+          </button>
+          <button class="btn-secondary" onclick="loadDemoTrip()" style="color: #FFFFFF !important; border-color: rgba(255,255,255,0.4) !important;">
+            Explore Goa Trip Demo
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         PAGE 2: CREATE A TRIP SETUP
+         ==================================================================== -->
+    <section id="create-trip" class="section">
+      <div class="setup-form-wrap">
+        <div class="section-editorial-heading">
+          <div class="eyebrow">Trip Setup</div>
+          <h2>Create a Trip</h2>
+          <p>Configure your shared workspace and invite your friends.</p>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Trip Name</label>
+          <input id="tripNameInput" placeholder="e.g. Manali Trek, Bali Getaway">
+
+          <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Destination</label>
+          <input id="tripDestInput" placeholder="e.g. Manali, Himachal">
+
+          <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Dates</label>
+          <input id="tripDatesInput" placeholder="e.g. 15–22 June 2026">
+
+          <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Members (comma separated)</label>
+          <input id="tripMembersInput" placeholder="e.g. Ananya, Rahul, Priya">
+
+          <div style="display: flex; gap: 14px; margin-top: 20px;">
+            <button class="btn-primary" onclick="handleCreateTrip()" style="flex: 1;">CREATE TRIP →</button>
+            <button class="btn-secondary" onclick="show('landing')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PAGE 3: JOIN A TRIP SETUP
+         ==================================================================== -->
+    <section id="join-trip" class="section">
+      <div class="setup-form-wrap">
+        <div class="section-editorial-heading">
+          <div class="eyebrow">Trip Invite</div>
+          <h2>Join a Trip</h2>
+          <p>Enter the trip invite code and your name to sync with your friends.</p>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Trip Code / Link</label>
+          <input id="joinCodeInput" placeholder="e.g. MANALI2026">
+
+          <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Your Name</label>
+          <input id="joinNameInput" placeholder="e.g. Jai Thawal">
+
+          <div style="display: flex; gap: 14px; margin-top: 20px;">
+            <button class="btn-primary" onclick="handleJoinTrip()" style="flex: 1;">JOIN TRIP →</button>
+            <button class="btn-secondary" onclick="show('landing')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PAGE 4: TRIP DASHBOARD WORKSPACE (GOA TRIP 2026)
+         ==================================================================== -->
+    <section id="trip-workspace" class="section">
+      
+      <!-- HERO: TRIP WORKSPACE (CINEMATIC FULL-BG) -->
+      <div class="hero-cinematic-bg">
+        <div class="hero-cinematic-content">
+          <div class="hero-tag-badge hero-tag-light">
+            <span></span> Active Trip Workspace
+          </div>
+          <h1 id="tripTitleDisplay" class="hero-cinematic-title">Goa Trip 2026</h1>
+          <div class="hero-trip-meta hero-meta-light" id="tripMetaDisplay">6 friends · 12–18 May</div>
+          <p class="hero-one-liner hero-one-liner-light">"Every expense. Every friend. Sorted."</p>
+
+          <div class="hero-action-buttons">
+            <button class="btn-primary" onclick="show('expenses')">+ Add Expense</button>
+            <button class="btn-forest" onclick="goToAnalytics()">Smart Split</button>
+            <button class="btn-hero-join" onclick="show('contact')">Settle Up</button>
+          </div>
+
+          <div class="hero-floating-tag hero-floating-tag-inline">📍 Candolim Villa, Goa</div>
+        </div>
+      </div>
+
+      <!-- MONEY SUMMARY: OVERSIZED TYPOGRAPHY -->
+      <div class="money-summary-section">
+        <div class="summary-headline-item">
+          <div class="summary-label-tag">Total Spent</div>
+          <div class="summary-big-number" id="metricTotal">₹18,420</div>
+          <div class="summary-sub-caption">Across all group activities</div>
+        </div>
+
+        <div class="summary-headline-item">
+          <div class="summary-label-tag">You Owe</div>
+          <div class="summary-big-number terracotta-highlight" id="metricYouOwe">₹820</div>
+          <div class="summary-sub-caption">Calculated net balance</div>
+        </div>
+
+        <div class="summary-headline-item">
+          <div class="summary-label-tag">Settled</div>
+          <div class="summary-big-number" id="metricSettled">70%</div>
+          <div class="summary-sub-caption"><span id="metricMembers">6</span> group members</div>
+        </div>
+      </div>
+
+      <!-- SIGNATURE SECTION: WHO OWES WHOM? -->
+      <div class="signature-section-wrap">
+        <div class="signature-header">
+          <div class="signature-eyebrow">Smart Settlement Flow</div>
+          <h2>WHO OWES WHOM?</h2>
+          <p>Splitvilla eliminates circular debts and simplifies group balances into clean, minimal direct transfers.</p>
+        </div>
+
+        <div class="flows-canvas" id="signatureFlowList">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div class="signature-bottom-insight">
+          <div>
+            <strong>Fewer payments. Less chasing.</strong>
+          </div>
+          <div class="ratio-badge" id="signatureRatioText">6 PAYMENTS → 2 PAYMENTS</div>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY (SOCIAL FEED) -->
+      <div class="social-activity-section">
+        <div class="section-title-row">
+          <h3>Recent Activity</h3>
+          <span>Live group feed</span>
+        </div>
+
+        <div class="social-feed-list" id="recentActivityList">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard" class="section">
+      <div class="ledger-container">
+        <div class="section-editorial-heading">
+          <div class="eyebrow">Dashboard</div>
+          <h2>Executive Summary</h2>
+          <p>Live aggregates across all members and expenses.</p>
+        </div>
+
+        <div class="money-summary-section" style="margin-bottom: 30px;">
+          <div class="summary-headline-item">
+            <div class="summary-label-tag">Total Recorded</div>
+            <div class="summary-big-number" id="total">₹0</div>
+          </div>
+          <div class="summary-headline-item">
+            <div class="summary-label-tag">Registered Members</div>
+            <div class="summary-big-number" id="membersCount">0</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <button class="btn-primary" onclick="show('expenses')">Manage Expenses</button>
+          <button class="btn-forest" onclick="goToAnalytics()">View Analytics</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMBERS (PEOPLE CARDS) -->
+    <section id="members" class="members-container section">
+      <div class="section-editorial-heading">
+        <div class="eyebrow">Group Roster</div>
+        <h2>Trip Members</h2>
+        <p>Add friends sharing the trip. Real-time balance badges indicate who gets money and who owes.</p>
+      </div>
+      
+      <div class="members-add-grid">
+        <input id="name" placeholder="Member Name (e.g. Rahul Sharma)">
+        <input id="photo" placeholder="Avatar Photo URL (optional)">
+        <div class="members-add-actions">
+          <button class="btn-primary" onclick="addMember()">Add Member</button>
+          <button class="btn-secondary" onclick="clearMembers()">Clear All</button>
+        </div>
+      </div>
+      
+      <div id="membersList"></div>
+    </section>
+
+    <!-- EXPENSES (MAGAZINE-STYLE LEDGER) -->
+    <section id="expenses" class="ledger-container section">
+      <div class="section-editorial-heading">
+        <div class="eyebrow">Financial Ledger</div>
+        <h2>Trip Expenses</h2>
+        <p>Record shared expenses with categories, amounts, and designated payers.</p>
+      </div>
+      
+      <div class="ledger-input-grid">
+        <div class="ledger-input-group">
+          <label>Description</label>
+          <input id="desc" placeholder="e.g. Beach Shack Dinner, Airport Cab">
+        </div>
+        <div class="ledger-input-group">
+          <label>Amount (₹)</label>
+          <input type="number" id="amt" placeholder="e.g. 2400">
+        </div>
+        <div class="ledger-input-group">
+          <label>Paid By</label>
+          <select id="payer"></select>
+        </div>
+      </div>
+
+      <div class="expense-actions-bar">
+        <button id="expenseSubmit" class="btn-primary" onclick="addExpense()">Add Expense</button>
+        <button id="expenseCancel" class="btn-secondary" onclick="cancelEditExpense()" style="display:none;">Cancel Edit</button>
+        <button class="btn-secondary" onclick="clearExpenses()">Clear All</button>
+      </div>
+
+      <div>
+        <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--forest-green); margin-bottom: 16px;">Ledger Records</h3>
+        <ul id="expList"></ul>
+      </div>
+    </section>
+
+    <section id="chat" class="ledger-container section">
+      <div class="section-editorial-heading">
+        <div class="eyebrow">Realtime Coordination</div>
+        <h2>Team Trip Chat</h2>
+        <p>Discuss payments, trip updates, and shared bills.</p>
+      </div>
+      
+      <div id="chatBox"></div>
+
+      <div class="chat-input-row">
+        <select id="chatSender" class="chat-sender-select"></select>
+        <input id="msg" placeholder="Type a message... (Enter to send)" style="margin-bottom: 0; flex: 1;">
+        <button class="btn-primary" onclick="sendMsg()" style="flex-shrink: 0;">Send</button>
+      </div>
+    </section>
+
+    <!-- PAYMENT / UPI -->
+    <section id="contact" class="ledger-container section">
+      <div class="section-editorial-heading">
+        <div class="eyebrow">Direct Settlements</div>
+        <h2>Payment & UPI Details</h2>
+        <p>Save your UPI ID and scanner QR so friends can settle balances instantly.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-field">
+          <label for="contactName">Account Holder Name</label>
+          <input id="contactName" placeholder="e.g. Jai Thawal">
+        </div>
+        <div class="contact-field">
+          <label for="contactUpi">UPI ID</label>
+          <input id="contactUpi" placeholder="e.g. jaithawal@okhdfcbank">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+        <button class="btn-primary" onclick="savePaymentDetails()">Save Details</button>
+        <button class="btn-secondary" onclick="copyUpi()">Copy UPI ID</button>
+      </div>
+
+      <div class="contact-qr">
+        <div class="contact-field">
+          <label for="qrUpload">Upload Custom Scanner / UPI QR</label>
+          <input id="qrUpload" type="file" accept="image/*">
+        </div>
+        <div class="qr-preview-wrap">
+          <div id="qrEmpty" class="qr-empty">No QR code uploaded yet.</div>
+          <img id="qrPreview" alt="UPI QR preview" />
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
